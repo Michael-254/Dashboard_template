@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reaching Smallholder Farmers - Agricultural Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header Component -->
+    <div id="header-container"></div>
+
+    <!-- Main Content -->
+    <main class="bg-gray-50 px-4 sm:px-6 md:px-8 py-6 sm:py-8">
+        <!-- Country Selector Component -->
+        <div id="country-selector-container"></div>
+
+        <!-- Page Title Section - Minimal -->
+        <div class="mb-6">
+            <h1 class="text-2xl font-bold text-gray-800">Reaching Smallholder Farmers</h1>
+        </div>
+
+        <!-- Indicator Cards Container -->
+        <div class="space-y-6">
+            <!-- Card 1: Number of Smallholder Farmers Reached -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                <!-- Card Header with Title -->
+                <div class="p-4 sm:p-6 border-b border-gray-100">
+                    <div class="mb-4">
+                        <h2 class="text-xl sm:text-2xl font-bold text-green-700">Number of Smallholder Farmers Reached <span class="text-gray-600 text-base font-medium">(Direct Beneficiaries)</span></h2>
+                    </div>
+                </div>
+
+                <!-- Chart Container -->
+                <div class="p-4 sm:p-6">
+                    <div class="w-full h-96 relative">
+                        <canvas id="farmersReachedChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Card Footer -->
+                <div class="px-4 sm:px-6 py-3 border-t border-gray-100 flex items-center justify-between bg-gray-50">
+                    <span class="text-xs text-gray-500">Year range: 2018 — 2025</span>
+                    <button class="text-green-600 text-sm font-semibold hover:text-green-700 hover:underline transition">
+                        View Details →
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 2: Production Area Under Improved Varieties -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                <!-- Card Header with Title -->
+                <div class="p-4 sm:p-6 border-b border-gray-100">
+                    <div class="mb-4">
+                        <h2 class="text-xl sm:text-2xl font-bold text-green-700">Production Area Under Improved Varieties <span class="text-gray-600 text-base font-medium">(Hectares)</span></h2>
+                    </div>
+
+                    <!-- Crops Legend -->
+                    <div class="flex flex-wrap gap-3">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-3 h-3 rounded-full" style="background-color: #FBBF24;"></span>
+                            <span class="text-sm font-medium text-gray-700">Maize</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="w-3 h-3 rounded-full" style="background-color: #FB923C;"></span>
+                            <span class="text-sm font-medium text-gray-700">Cowpea</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="w-3 h-3 rounded-full" style="background-color: #10B981;"></span>
+                            <span class="text-sm font-medium text-gray-700">Beans</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="w-3 h-3 rounded-full" style="background-color: #9CA3AF;"></span>
+                            <span class="text-sm font-medium text-gray-700">Sorghum</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chart Container -->
+                <div class="p-4 sm:p-6">
+                    <div class="w-full h-96 relative">
+                        <canvas id="productionAreaChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Card Footer -->
+                <div class="px-4 sm:px-6 py-3 border-t border-gray-100 flex items-center justify-between bg-gray-50">
+                    <span class="text-xs text-gray-500">Year range: 2018 — 2025</span>
+                    <button class="text-green-600 text-sm font-semibold hover:text-green-700 hover:underline transition">
+                        View Details →
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 3: VBAs Recruited and Trained -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                <!-- Card Header with Title -->
+                <div class="p-4 sm:p-6 border-b border-gray-100">
+                    <div class="mb-4">
+                        <h2 class="text-xl sm:text-2xl font-bold text-green-700">VBAs Recruited and Trained <span class="text-gray-600 text-base font-medium">(Village Based Advisors)</span></h2>
+                    </div>
+                </div>
+
+                <!-- Chart Container -->
+                <div class="p-4 sm:p-6">
+                    <div class="w-full h-96 relative">
+                        <canvas id="vbasChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Card Footer -->
+                <div class="px-4 sm:px-6 py-3 border-t border-gray-100 flex items-center justify-between bg-gray-50">
+                    <span class="text-xs text-gray-500">Year range: 2018 — 2025</span>
+                    <button class="text-green-600 text-sm font-semibold hover:text-green-700 hover:underline transition">
+                        View Details →
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 4: Capacity Building of Extension Services -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                <!-- Card Header with Title -->
+                <div class="p-4 sm:p-6 border-b border-gray-100">
+                    <div class="mb-4">
+                        <h2 class="text-xl sm:text-2xl font-bold text-green-700">Capacity Building of Extension Services <span class="text-gray-600 text-base font-medium">(Number of Extension Officers Trained)</span></h2>
+                    </div>
+                </div>
+
+                <!-- Chart Container -->
+                <div class="p-4 sm:p-6">
+                    <div class="w-full h-96 relative">
+                        <canvas id="extensionCapacityChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Card Footer -->
+                <div class="px-4 sm:px-6 py-3 border-t border-gray-100 flex items-center justify-between bg-gray-50">
+                    <span class="text-xs text-gray-500">Year range: 2018 — 2025</span>
+                    <button class="text-green-600 text-sm font-semibold hover:text-green-700 hover:underline transition">
+                        View Details →
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 5: Farmers Training to GAP -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                <!-- Card Header with Title -->
+                <div class="p-4 sm:p-6 border-b border-gray-100">
+                    <div class="mb-4">
+                        <h2 class="text-xl sm:text-2xl font-bold text-green-700">Farmers Trained in GAP <span class="text-gray-600 text-base font-medium">(Good Agricultural Practices)</span></h2>
+                    </div>
+                </div>
+
+                <!-- Chart Container -->
+                <div class="p-4 sm:p-6">
+                    <div class="w-full h-96 relative">
+                        <canvas id="gapTrainingChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Card Footer -->
+                <div class="px-4 sm:px-6 py-3 border-t border-gray-100 flex items-center justify-between bg-gray-50">
+                    <span class="text-xs text-gray-500">Year range: 2018 — 2025</span>
+                    <button class="text-green-600 text-sm font-semibold hover:text-green-700 hover:underline transition">
+                        View Details →
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 6: Accessibility of Farmers to Seed Sellers -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                <!-- Card Header with Title -->
+                <div class="p-4 sm:p-6 border-b border-gray-100">
+                    <div class="mb-4">
+                        <h2 class="text-xl sm:text-2xl font-bold text-green-700">Accessibility of Farmers to Seed Sellers <span class="text-gray-600 text-base font-medium">(% of Farmers within 5km)</span></h2>
+                    </div>
+                </div>
+
+                <!-- Chart Container -->
+                <div class="p-4 sm:p-6">
+                    <div class="w-full h-96 relative">
+                        <canvas id="seedAccessibilityChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Card Footer -->
+                <div class="px-4 sm:px-6 py-3 border-t border-gray-100 flex items-center justify-between bg-gray-50">
+                    <span class="text-xs text-gray-500">Year range: 2018 — 2025</span>
+                    <button class="text-green-600 text-sm font-semibold hover:text-green-700 hover:underline transition">
+                        View Details →
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Component -->
+    <div id="footer-container"></div>
+
+    <!-- JavaScript for Components and Chart -->
+    <script>
+        // Chart data for Farmers Reached
+        const farmersReachedData = {
+            labels: ['2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+            datasets: [
+                {
+                    label: 'Farmers Reached',
+                    data: [15000, 22000, 32000, 45000, 58000, 72000, 87000, 105000],
+                    borderColor: '#10B981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    tension: 0.4,
+                    fill: false,
+                    borderWidth: 2,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#10B981'
+                }
+            ]
+        };
+
+        // Chart data for Production Area Under Improved Varieties
+        const productionAreaData = {
+            labels: ['2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+            datasets: [
+                {
+                    label: 'Maize',
+                    data: [8500, 12000, 16500, 22000, 28000, 35000, 42000, 50000],
+                    borderColor: '#FBBF24',
+                    backgroundColor: 'rgba(251, 191, 36, 0.1)',
+                    tension: 0.4,
+                    fill: false,
+                    borderWidth: 2,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#FBBF24'
+                },
+                {
+                    label: 'Cowpea',
+                    data: [1200, 1800, 2600, 3500, 4500, 5800, 7200, 9000],
+                    borderColor: '#FB923C',
+                    backgroundColor: 'rgba(251, 146, 60, 0.1)',
+                    tension: 0.4,
+                    fill: false,
+                    borderWidth: 2,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#FB923C'
+                },
+                {
+                    label: 'Beans',
+                    data: [2000, 2800, 3800, 5000, 6200, 7800, 9200, 11000],
+                    borderColor: '#10B981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    tension: 0.4,
+                    fill: false,
+                    borderWidth: 2,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#10B981'
+                },
+                {
+                    label: 'Sorghum',
+                    data: [800, 1200, 1800, 2400, 3200, 4200, 5200, 6500],
+                    borderColor: '#9CA3AF',
+                    backgroundColor: 'rgba(156, 163, 175, 0.1)',
+                    tension: 0.4,
+                    fill: false,
+                    borderWidth: 2,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#9CA3AF'
+                }
+            ]
+        };
+
+        // Chart data for VBAs
+        const vbasData = {
+            labels: ['2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+            datasets: [
+                {
+                    label: 'VBAs Trained',
+                    data: [250, 385, 550, 735, 950, 1185, 1450, 1750],
+                    borderColor: '#F59E0B',
+                    backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                    tension: 0.4,
+                    fill: false,
+                    borderWidth: 2,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#F59E0B'
+                }
+            ]
+        };
+
+        // Chart data for Extension Capacity
+        const extensionCapacityData = {
+            labels: ['2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+            datasets: [
+                {
+                    label: 'Extension Officers Trained',
+                    data: [120, 165, 225, 295, 375, 465, 565, 675],
+                    borderColor: '#3B82F6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    tension: 0.4,
+                    fill: false,
+                    borderWidth: 2,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#3B82F6'
+                }
+            ]
+        };
+
+        // Chart data for GAP Training
+        const gapTrainingData = {
+            labels: ['2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+            datasets: [
+                {
+                    label: 'Farmers Trained',
+                    data: [5000, 8500, 13000, 18500, 24500, 31000, 38500, 47000],
+                    borderColor: '#8B5CF6',
+                    backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                    tension: 0.4,
+                    fill: false,
+                    borderWidth: 2,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#8B5CF6'
+                }
+            ]
+        };
+
+        // Chart data for Seed Accessibility
+        const seedAccessibilityData = {
+            labels: ['2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+            datasets: [
+                {
+                    label: 'Farmers with Access to Agrodealers',
+                    data: [
+                        { x: 15000, y: 35 },
+                        { x: 22000, y: 42 },
+                        { x: 32000, y: 52 },
+                        { x: 45000, y: 62 },
+                        { x: 58000, y: 70 },
+                        { x: 72000, y: 78 },
+                        { x: 87000, y: 85 },
+                        { x: 105000, y: 92 }
+                    ],
+                    borderColor: '#EC4899',
+                    backgroundColor: 'rgba(236, 72, 153, 0.6)',
+                    borderWidth: 2,
+                    pointRadius: 6,
+                    pointHoverRadius: 8
+                }
+            ]
+        };
+
+        // Function to attach country change listener
+        function attachCountryChangeListener() {
+            const countrySelect = document.getElementById('countrySelect');
+            const selectedCountryDisplay = document.getElementById('selectedCountry');
+
+            if (countrySelect && selectedCountryDisplay) {
+                countrySelect.addEventListener('change', function(e) {
+                    const selectedCountry = e.target.value;
+                    
+                    // Update country display
+                    selectedCountryDisplay.textContent = selectedCountry;
+                    selectedCountryDisplay.style.opacity = '0.5';
+                    selectedCountryDisplay.style.transition = 'opacity 0.3s ease-in-out';
+                    
+                    // Reinitialize chart with new country data (if needed)
+                    setTimeout(() => {
+                        selectedCountryDisplay.style.opacity = '1';
+                        console.log('Country changed to:', selectedCountry);
+                    }, 100);
+                });
+            }
+        }
+
+        // Initialize charts
+        function initializeCharts() {
+            const chartConfigs = [
+                { id: 'farmersReachedChart', data: farmersReachedData, max: 120000, type: 'line' },
+                { id: 'productionAreaChart', data: productionAreaData, max: 60000, type: 'line' },
+                { id: 'vbasChart', data: vbasData, max: 2000, type: 'line' },
+                { id: 'extensionCapacityChart', data: extensionCapacityData, max: 800, type: 'line' },
+                { id: 'gapTrainingChart', data: gapTrainingData, max: 55000, type: 'line' },
+                { id: 'seedAccessibilityChart', data: seedAccessibilityData, max: 120000, type: 'scatter' }
+            ];
+
+            chartConfigs.forEach(config => {
+                const ctx = document.getElementById(config.id);
+                if (ctx) {
+                    new Chart(ctx, {
+                        type: config.type,
+                        data: config.data,
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { display: false },
+                                tooltip: {
+                                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                    padding: 12,
+                                    titleFont: { size: 14, weight: 'bold' },
+                                    bodyFont: { size: 13 },
+                                    borderColor: '#e5e7eb',
+                                    borderWidth: 1,
+                                    callbacks: config.type === 'scatter' ? {
+                                        label: function(context) {
+                                            return `Farmers: ${context.raw.x.toLocaleString()} | Access: ${context.raw.y}%`;
+                                        }
+                                    } : undefined
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    max: config.type === 'scatter' ? 100 : config.max,
+                                    title: {
+                                        display: config.type === 'scatter',
+                                        text: '% of Farmers with Access'
+                                    },
+                                    ticks: { font: { size: 12 }, color: '#6b7280' },
+                                    grid: { color: '#f3f4f6', drawBorder: false }
+                                },
+                                x: {
+                                    beginAtZero: true,
+                                    max: config.type === 'scatter' ? 120000 : undefined,
+                                    title: {
+                                        display: config.type === 'scatter',
+                                        text: 'Number of Smallholder Farmers'
+                                    },
+                                    ticks: { font: { size: 12 }, color: '#6b7280' },
+                                    grid: { display: false, drawBorder: false }
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
+        // Load Header Component
+        fetch('./components/header.html')
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to load header');
+                return response.text();
+            })
+            .then(html => {
+                document.getElementById('header-container').innerHTML = html;
+                console.log('Header loaded successfully');
+            })
+            .catch(error => console.error('Error loading header:', error));
+
+        // Load Country Selector Component
+        fetch('./components/country-selector.html')
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to load country selector');
+                return response.text();
+            })
+            .then(html => {
+                document.getElementById('country-selector-container').innerHTML = html;
+                console.log('Country selector loaded successfully');
+                setTimeout(() => {
+                    attachCountryChangeListener();
+                }, 100);
+            })
+            .catch(error => console.error('Error loading country selector:', error));
+
+        // Load Footer Component
+        fetch('./components/footer.html')
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to load footer');
+                return response.text();
+            })
+            .then(html => {
+                document.getElementById('footer-container').innerHTML = html;
+                console.log('Footer loaded successfully');
+            })
+            .catch(error => console.error('Error loading footer:', error));
+
+        // Initialize charts when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeCharts();
+            console.log('All charts initialized');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agricultural Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header Component -->
+    <div id="header-container"></div>
+
+    <!-- Main Content (Dynamic Body) -->
+    <main class="bg-gray-50 px-4 sm:px-6 md:px-8 py-6 sm:py-8">
+        <!-- Country Selector Component -->
+        <div id="country-selector-container"></div>
+
+        <!-- Header Section with Map -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-8 sm:mb-10">
+            <!-- Map Section - Left -->
+            <div class="bg-white rounded-lg sm:rounded-xl shadow-sm p-4 sm:p-8 flex items-center justify-center order-2 lg:order-1 min-h-80">
+                <div class="relative w-full h-full flex items-center justify-center">
+                    <!-- Country Specific Agriculture Image - Responsive Container -->
+                    <img id="countryImage" src="https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=500&h=500&fit=crop" alt="Agriculture in country" class="max-w-full max-h-96 rounded-lg shadow-md object-contain"/>
+                </div>
+            </div>
+
+            <!-- Details Section - Right -->
+            <div class="space-y-4 order-1 lg:order-2">
+                <!-- Land Area Card -->
+                <div class="bg-gray-100 rounded-lg px-4 sm:px-6 py-3 sm:py-4">
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between">
+                            <p class="text-xs sm:text-sm text-gray-600 font-semibold uppercase">TOTAL LAND AREA</p>
+                            <p class="text-base sm:text-lg font-bold text-green-700">12 Million Hectares</p>
+                        </div>
+                        <div class="border-t border-gray-300 pt-2 flex items-center justify-between">
+                            <p class="text-xs sm:text-sm text-gray-600 font-semibold uppercase">ARABLE LAND</p>
+                            <p class="text-base sm:text-lg font-bold text-green-700">40 %</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Areas Harvested Section -->
+                <div class="space-y-3">
+                    <h2 class="text-base sm:text-lg font-bold text-gray-800">Areas harvested for focus crops (2022)</h2>
+                    
+                    <!-- Crops Grid - 2 rows x 2 columns -->
+                    <div class="grid grid-cols-2 gap-3">
+                        <!-- Maize -->
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center shadow-sm flex-shrink-0">
+                                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6z"/></svg>
+                            </div>
+                            <div>
+                                <p class="text-xs sm:text-sm text-gray-600">Maize / in hectares</p>
+                                <p class="text-sm sm:text-base font-bold text-green-700">1,750,000</p>
+                            </div>
+                        </div>
+
+                        <!-- Groundnut -->
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-amber-700 rounded-full flex items-center justify-center shadow-sm flex-shrink-0">
+                                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm0-2a6 6 0 100-12 6 6 0 000 12z"/></svg>
+                            </div>
+                            <div>
+                                <p class="text-xs sm:text-sm text-gray-600">Groundnut / in hectares</p>
+                                <p class="text-sm sm:text-base font-bold text-green-700">400,000</p>
+                            </div>
+                        </div>
+
+                        <!-- Bean -->
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-green-200 rounded-full flex items-center justify-center shadow-sm flex-shrink-0">
+                                <svg class="w-5 h-5 text-green-700" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"/></svg>
+                            </div>
+                            <div>
+                                <p class="text-xs sm:text-sm text-gray-600">Bean / in hectares</p>
+                                <p class="text-sm sm:text-base font-bold text-green-700">366,567</p>
+                            </div>
+                        </div>
+
+                        <!-- Soya Bean -->
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center shadow-sm flex-shrink-0">
+                                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"/></svg>
+                            </div>
+                            <div>
+                                <p class="text-xs sm:text-sm text-gray-600">Soya bean / in hectares</p>
+                                <p class="text-sm sm:text-base font-bold text-green-700">215,000</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Population and Farming Households -->
+                <div class="space-y-3">
+                    <h2 class="text-base sm:text-lg font-bold text-gray-800">Population and Farming households</h2>
+                    
+                    <!-- Single Row - Two Columns -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <!-- Total Population -->
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center flex-shrink-0 shadow-md">
+                                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/></svg>
+                            </div>
+                            <div>
+                                <p class="text-xs sm:text-sm text-gray-600">Total Population (2022)</p>
+                                <p class="text-sm sm:text-base font-bold text-green-700">19.6 Million</p>
+                            </div>
+                        </div>
+
+                        <!-- Farming Households -->
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center flex-shrink-0 shadow-md">
+                                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>
+                            </div>
+                            <div>
+                                <p class="text-xs sm:text-sm text-gray-600">Farming Households (2022)</p>
+                                <p class="text-sm sm:text-base font-bold text-green-700">3.7 Million</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Agriculture Business Scores -->
+                <div class="space-y-2">
+                    <div class="bg-gray-100 rounded-lg px-4 sm:px-6 py-3 sm:py-4">
+                        <p class="text-xs sm:text-sm text-gray-800 font-semibold">Enabling the Business of Agriculture Topic Score (2019): <span class="text-green-700">41.51</span> <span class="text-gray-600">out of 100</span></p>
+                    </div>
+                    <div class="bg-gray-100 rounded-lg px-4 sm:px-6 py-3 sm:py-4">
+                        <p class="text-xs sm:text-sm text-gray-800 font-semibold">Enabling the Business of Agriculture Rank (2019): <span class="text-green-700">76</span> <span class="text-gray-600">out of 101 Country</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Component -->
+    <div id="footer-container"></div>
+
+    <!-- JavaScript for Components and Country Selection -->
+    <script>
+        // Country images mapping
+        const countryImages = {
+            'Somalia': 'https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=500&h=500&fit=crop',
+            'Kenya': 'https://images.unsplash.com/photo-1625246333195-78d9c38ad576?w=500&h=500&fit=crop',
+            'Uganda': 'https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=500&h=500&fit=crop',
+            'Tanzania': 'https://images.unsplash.com/photo-1500595046891-ffc7204caa22?w=500&h=500&fit=crop',
+            'Ethiopia': 'https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=500&h=500&fit=crop',
+            'Rwanda': 'https://images.unsplash.com/photo-1625246333195-78d9c38ad576?w=500&h=500&fit=crop'
+        };
+
+        // Function to attach country change listener
+        function attachCountryChangeListener() {
+            const countrySelect = document.getElementById('countrySelect');
+            const selectedCountryDisplay = document.getElementById('selectedCountry');
+            const countryImage = document.getElementById('countryImage');
+
+            if (countrySelect && selectedCountryDisplay && countryImage) {
+                countrySelect.addEventListener('change', function(e) {
+                    const selectedCountry = e.target.value;
+                    
+                    // Update country display
+                    selectedCountryDisplay.textContent = selectedCountry;
+                    selectedCountryDisplay.style.opacity = '0.5';
+                    selectedCountryDisplay.style.transition = 'opacity 0.3s ease-in-out';
+                    
+                    // Update country image with smooth transition
+                    if (countryImages[selectedCountry]) {
+                        countryImage.style.opacity = '0.5';
+                        countryImage.style.transition = 'opacity 0.3s ease-in-out';
+                        
+                        // Preload image before changing src
+                        const img = new Image();
+                        img.onload = () => {
+                            countryImage.src = countryImages[selectedCountry];
+                            countryImage.alt = `Agriculture in ${selectedCountry}`;
+                            setTimeout(() => {
+                                countryImage.style.opacity = '1';
+                            }, 100);
+                        };
+                        img.onerror = () => {
+                            console.error('Failed to load image for', selectedCountry);
+                            countryImage.style.opacity = '1';
+                        };
+                        img.src = countryImages[selectedCountry];
+                    }
+                    
+                    setTimeout(() => {
+                        selectedCountryDisplay.style.opacity = '1';
+                    }, 100);
+                });
+            } else {
+                console.log('Country selector elements not found');
+            }
+        }
+
+        // Load Header Component
+        fetch('./components/header.html')
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to load header');
+                return response.text();
+            })
+            .then(html => {
+                document.getElementById('header-container').innerHTML = html;
+                console.log('Header loaded successfully');
+            })
+            .catch(error => console.error('Error loading header:', error));
+
+        // Load Country Selector Component
+        fetch('./components/country-selector.html')
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to load country selector');
+                return response.text();
+            })
+            .then(html => {
+                document.getElementById('country-selector-container').innerHTML = html;
+                console.log('Country selector loaded successfully');
+                // Attach listener after component is loaded
+                setTimeout(() => {
+                    attachCountryChangeListener();
+                }, 100);
+            })
+            .catch(error => console.error('Error loading country selector:', error));
+
+        // Load Footer Component
+        fetch('./components/footer.html')
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to load footer');
+                return response.text();
+            })
+            .then(html => {
+                document.getElementById('footer-container').innerHTML = html;
+                console.log('Footer loaded successfully');
+            })
+            .catch(error => console.error('Error loading footer:', error));
+
+        // Also try to attach listener on DOMContentLoaded as fallback
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOMContentLoaded fired');
+            setTimeout(() => {
+                attachCountryChangeListener();
+            }, 200);
+        });
+    </script>
+</body>
+</html>
